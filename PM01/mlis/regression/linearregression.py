@@ -7,7 +7,7 @@ def h(w, X):
     :param w: weights/parameters
     :param X: data matrix with x_i^T in the ith row
     """
-    return None  # <<<--- Replace this by your own result.
+    return X@w # <<<--- Replace this by your own result.
 
 
 def J(w, X, y):
@@ -17,7 +17,8 @@ def J(w, X, y):
     :param X: data matrix with x_i^T in the ith row
     :param y: vector of labels
     """
-    return None  # <<<--- Replace this by your own result.
+    m, n = X.shape
+    return 1/m * sum((X@w - y)**2)  # <<<--- Replace this by your own result.
 
 
 def dJ(w, X, y):
@@ -28,7 +29,15 @@ def dJ(w, X, y):
     :param y: vector of labels
     :return gradient of J with respect to w
     """
-    return None  # <<<--- Replace this by your own result.
+    m, n = X.shape
+    
+    pred = X@w
+    error = (pred-y)
+    grad = X.T@error
+    
+    print(grad)
+    
+    return grad  # <<<--- Replace this by your own result.
 
 
 def gradientDescent(dJ, X, y, w0, eta, iters):
@@ -42,10 +51,11 @@ def gradientDescent(dJ, X, y, w0, eta, iters):
     :param iters: number of gradient descent steps
     :return list (history) of all calculated parameters
     """
+    m, n = X.shape
     w = w0  # initial weights
     ws = [w]
     for t in range(iters):  # for t = 1, ..., iters
-        w = w  # <<<--- Replace this by your own result.
+        w = w - eta * dJ(w, X, y)  # <<<--- Replace this by your own result.
         ws.append(w)
     return np.array(ws)
 
@@ -56,4 +66,4 @@ def least_squares(X, y):
     :param y: vector of labels
     :return: The analytic solution to least squares
     """
-    return None  # <<<--- Replace this by your own result.
+    return np.linalg.solve(X.T@X, X.T@y) # <<<--- Replace this by your own result.
