@@ -30,14 +30,7 @@ def dJ(w, X, y):
     :return gradient of J with respect to w
     """
     m, n = X.shape
-    
-    pred = X@w
-    error = (pred-y)
-    grad = X.T@error
-    
-    print(grad)
-    
-    return grad  # <<<--- Replace this by your own result.
+    return 2/m * X.T@(h(w, X)-y)  # <<<--- Replace this by your own result.
 
 
 def gradientDescent(dJ, X, y, w0, eta, iters):
