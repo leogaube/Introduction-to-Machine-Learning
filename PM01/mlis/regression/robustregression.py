@@ -11,7 +11,8 @@ def J(w, X, y):
     :param y: vector of labels
     :return absolute loss objective function
     """
-    return None  # <<<--- Replace this by your own result.
+    m, n = X.shape
+    return 1/m * np.sum(np.abs(X@w - y))  # <<<--- Replace this by your own result.
 
 
 def dJ(w, X, y):
@@ -22,4 +23,5 @@ def dJ(w, X, y):
     :param y: vector of labels
     :return gradient of J with respect to w
     """
-    return None  # <<<--- Replace this by your own result.
+    m, n = X.shape
+    return 1/m * X.T @ np.sign(h(w, X)-y)  # <<<--- Replace this by your own result.
