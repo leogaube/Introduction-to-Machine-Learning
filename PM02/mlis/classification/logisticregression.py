@@ -11,8 +11,8 @@ def J(w, X, y):
     @param y: vector of labels
     @return: J(w)
     """
-    # use logistic_loss(yhat, y)
-    return None  # <<<--- Replace this by your own result.
+    yhat = h(w, X)
+    return 1/yhat.shape[0] * np.sum(logistic_loss(yhat, y))  # <<<--- Replace this by your own result.
 
 
 def dJ(w, X, y):
@@ -23,4 +23,5 @@ def dJ(w, X, y):
     @param y: vector of labels
     @return: ∇J(w)
     """
+    -y * X / (1 + np.exp(y * h(w, X)))
     return None  # <<<--- Replace this by your own result.

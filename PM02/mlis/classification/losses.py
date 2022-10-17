@@ -8,7 +8,7 @@ def logistic_loss(yhat, y):
     :param y: actual label  (scalar or array)
     :return: logistic loss
     """
-    return None  # <<<--- Replace this by your own result.
+    return np.log(1+np.exp(-y*yhat))  # <<<--- Replace this by your own result.
 
 
 def zero_one_loss(yhat, y):
