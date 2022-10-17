@@ -12,7 +12,7 @@ def J(w, X, y):
     :return absolute loss objective function
     """
     m, n = X.shape
-    return 1/m * np.sum(np.abs(X@w - y))  # <<<--- Replace this by your own result.
+    return 1 / m * np.sum(np.abs(X @ w - y))  # <<<--- Replace this by your own result.
 
 
 def dJ(w, X, y):
@@ -24,4 +24,4 @@ def dJ(w, X, y):
     :return gradient of J with respect to w
     """
     m, n = X.shape
-    return 1/m * X.T @ np.sign(h(w, X)-y)  # <<<--- Replace this by your own result.
+    return 1 / m * X.T @ np.sign(h(w, X) - y)  # <<<--- Replace this by your own result.
