@@ -1,6 +1,7 @@
 import numpy as np
 
 from mlis.nonlinear.features import poly_feat
+from mlis.arrays import asinput
 
 
 def J(w, X, y, degree, lam):
@@ -12,7 +13,13 @@ def J(w, X, y, degree, lam):
     :param degree: polynomial degree of feature function
     :param lam: regularization (>=0)
     """
-    return None  # <<<--- Replace this by your own result.
+    y_hat = poly_feat(X, degree) @ w
+    regularization = lam * np.sum(np.abs(w))
+
+    return np.mean((y_hat - y) ** 2 + regularization, axis=0)
+
+
+# <<<--- Replace this by your own result.
 
 
 def dJ(w, X, y, degree, lam):
@@ -24,4 +31,18 @@ def dJ(w, X, y, degree, lam):
     :param lam: regularization (>=0)
     :param degree: polynomial degree of feature function
     """
-    return None  # <<<--- Replace this by your own result.
+    m, n = X.shape
+    y_hat = poly_feat(X, degree) @ w
+    regularization = lam * np.sum(np.sign(w))
+    # print(w)
+    # print(X)
+    # print(y)
+    print((y_hat - y))
+    print(regularization)
+
+    return 2 / m * poly_feat(X, degree).T @ (y_hat - y) + regularization
+
+    # not working :/
+
+
+# <<<--- Replace this by your own result.

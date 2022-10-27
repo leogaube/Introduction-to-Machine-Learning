@@ -28,4 +28,9 @@ def ridge_poly(X, y, degree, lam):
     @param lam: lambda (λ >=0)
     @return: A function X -> <ϕ(X),w>
     """
-    return lambda X: None  # <<<--- Replace this by your own result.
+    phi = poly_feat(X, degree)
+    w = np.linalg.solve(phi.T @ phi + lam * np.eye(degree + 1), phi.T @ y)
+    return lambda X: poly_feat(X, degree) @ w.T
+
+
+# <<<--- Replace this by your own result.
