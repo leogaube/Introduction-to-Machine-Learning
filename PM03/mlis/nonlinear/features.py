@@ -15,5 +15,5 @@ def poly_feat(X, degree):
     assert degree >= 0
     # make sure X is a numpy array
     X = asinput(X)
-    m, n = X.shape
-    return None  # <<<--- Replace this by your own result.
+    return np.squeeze([X ** d for d in range(degree + 1)]).T
+    # <<<--- Replace this by your own result.

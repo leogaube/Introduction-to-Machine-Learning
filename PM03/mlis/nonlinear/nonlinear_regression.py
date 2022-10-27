@@ -11,7 +11,12 @@ def ls_poly(X, y, degree):
     @param degree: polynomial degree (>=0)
     @return: A function X -> <ϕ(X),w>
     """
-    return lambda X: None  # <<<--- Replace this by your own result.
+    phi = poly_feat(X, degree)
+    w = np.linalg.solve(phi.T @ phi, phi.T @ y)
+    return lambda X: poly_feat(X, degree) @ w.T
+
+
+# <<<--- Replace this by your own result.
 
 
 def ridge_poly(X, y, degree, lam):
