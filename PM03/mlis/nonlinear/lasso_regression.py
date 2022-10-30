@@ -1,7 +1,6 @@
 import numpy as np
 
 from mlis.nonlinear.features import poly_feat
-from mlis.arrays import asinput
 
 
 def J(w, X, y, degree, lam):
