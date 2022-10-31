@@ -30,18 +30,12 @@ def dJ(w, X, y, degree, lam):
     :param lam: regularization (>=0)
     :param degree: polynomial degree of feature function
     """
-    m, n = X.shape
-    y_hat = poly_feat(X, degree) @ w
-    regularization = lam * np.sum(np.sign(w))
-    # print(w)
-    # print(X)
-    # print(y)
-    print((y_hat - y))
-    print(regularization)
+    poly_X = poly_feat(X, degree)
 
-    return 2 / m * poly_feat(X, degree).T @ (y_hat - y) + regularization
+    y_hat = poly_X @ w
+    regularization = lam * np.sign(w)
 
-    # not working :/
+    return 2 / len(y) * poly_X.T @ (y_hat - y) + regularization
 
 
 # <<<--- Replace this by your own result.
