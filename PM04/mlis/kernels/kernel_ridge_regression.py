@@ -14,4 +14,7 @@ def kernel_ridge(X, y, sigma, lam):
     """
     # make sure X and y are numpy arrays
     X, y = asinput(X), aslabel(y)
-    return None  # <<<--- Replace this by your own result.
+    m, n = X.shape
+    alpha = np.linalg.solve(sq_exp(X, X, sigma) + (lam * np.eye(m)), y)
+    return lambda Z: alpha @ sq_exp(X, Z, sigma)
+    # <<<--- Replace this by your own result.

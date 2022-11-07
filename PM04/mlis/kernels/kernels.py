@@ -12,8 +12,8 @@ def sq_dist(X, Z):
     """
     # make sure X and Z are numpy arrays
     X, Z = asinput(X), asinput(Z)
-    return (X ** 2).sum(axis=1)[:, None] + (Z ** 2).sum(axis=1) - np.dot(2 * X, Z.T)
-    return None  # <<<--- Replace this by your own result.
+    return (X ** 2).sum(axis=1)[:, None] + (Z ** 2).sum(axis=1) - 2 * X @ Z.T
+    # <<<--- Replace this by your own result.
 
 
 def sq_exp(X, Z, sigma):
@@ -26,4 +26,4 @@ def sq_exp(X, Z, sigma):
     """
     assert sigma > 0
     return np.exp(-sq_dist(X, Z) / (2 * sigma ** 2))
-    return None  # <<<--- Replace this by your own result.
+    # <<<--- Replace this by your own result.
