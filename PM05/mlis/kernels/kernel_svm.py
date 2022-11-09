@@ -6,13 +6,15 @@ from mlis.arrays import asinput, aslabel
 
 # wrapper around cvxopt
 def quadprog(P, q, G, h, A, b):
-    sol = cvxopt.solvers.qp(cvxopt.matrix(P, tc='d'),
-                            cvxopt.matrix(q, tc='d'),
-                            cvxopt.matrix(G, tc='d'),
-                            cvxopt.matrix(h, tc='d'),
-                            cvxopt.matrix(A, tc='d'),
-                            cvxopt.matrix(b, tc='d'))
-    return np.ravel(sol['x'])
+    sol = cvxopt.solvers.qp(
+        cvxopt.matrix(P, tc="d"),
+        cvxopt.matrix(q, tc="d"),
+        cvxopt.matrix(G, tc="d"),
+        cvxopt.matrix(h, tc="d"),
+        cvxopt.matrix(A, tc="d"),
+        cvxopt.matrix(b, tc="d"),
+    )
+    return np.ravel(sol["x"])
 
 
 def lagrange_multipliers(y, C, K):
@@ -26,12 +28,12 @@ def lagrange_multipliers(y, C, K):
     m = K.shape[0]
 
     # --- Replace this by your own result.
-    P = None
-    q = None
-    G = None
-    h = None
-    A = None
-    b = None
+    P = (y * y.T) * K
+    q = -1 * np.ones((m))
+    G = np.concatenate((-1 * np.identity(m), np.identity(m)))
+    h = np.concatenate((np.zeros(m), C * np.ones(m)))
+    A = y[np.newaxis, :]
+    b = 0.0
     alpha = quadprog(P, q, G, h, A, b)
     return alpha
 
@@ -46,7 +48,17 @@ def bias(y, C, alpha, K):
     """
     # for stability, use not a single, but all alphas which fulfill
     # the KKT criteria and then average the result
-    return None  # <<<--- Replace this by your own result.
+    m = alpha.shape[0]
+    biases = []
+    for i in range(m):
+        if alpha[i] <= 0 or alpha[i] >= C:
+            continue
+        bias = y[i]
+        for j in range(m):
+            bias -= alpha[j] * y[j] * K[j, i]
+        biases.append(bias)
+
+    return np.mean(biases)  # <<<--- Replace this by your own result.
 
 
 def svm_fit(X, y, C, kernel):
