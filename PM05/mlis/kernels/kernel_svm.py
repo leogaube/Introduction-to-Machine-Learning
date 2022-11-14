@@ -32,7 +32,7 @@ def lagrange_multipliers(y, C, K):
     q = -1 * np.ones((m))
     G = np.concatenate((-1 * np.identity(m), np.identity(m)))
     h = np.concatenate((np.zeros(m), C * np.ones(m)))
-    A = y[np.newaxis, :]
+    A = y.reshape((1, y.shape[0]))
     b = 0.0
     alpha = quadprog(P, q, G, h, A, b)
     return alpha
@@ -48,15 +48,8 @@ def bias(y, C, alpha, K):
     """
     # for stability, use not a single, but all alphas which fulfill
     # the KKT criteria and then average the result
-    m = alpha.shape[0]
-    biases = []
-    for i in range(m):
-        if alpha[i] <= 0 or alpha[i] >= C:
-            continue
-        bias = y[i]
-        for j in range(m):
-            bias -= alpha[j] * y[j] * K[j, i]
-        biases.append(bias)
+    idx = (alpha > 0) & (alpha < C)
+    biases = y[idx] - (K[idx, :][:, idx] @ (alpha[idx] * y[idx]))
 
     return np.mean(biases)  # <<<--- Replace this by your own result.
 
