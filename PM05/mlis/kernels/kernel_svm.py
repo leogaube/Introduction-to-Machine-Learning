@@ -32,7 +32,7 @@ def lagrange_multipliers(y, C, K):
     q = -1 * np.ones((m))
     G = np.concatenate((-1 * np.identity(m), np.identity(m)))
     h = np.concatenate((np.zeros(m), C * np.ones(m)))
-    A = y.reshape((1, y.shape[0]))
+    A = y.reshape((1, -1))
     b = 0.0
     alpha = quadprog(P, q, G, h, A, b)
     return alpha
