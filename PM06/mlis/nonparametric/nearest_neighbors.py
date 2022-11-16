@@ -14,4 +14,14 @@ def knn_classify(X, y, Z, k, dist):
     @return: the label prediction by k nearest neighbor classification
     """
     X, Z, y = asinput(X), asinput(Z), aslabel(y)
-    return None  # <<<--- Replace this by your own result.
+    m, n = X.shape
+
+    distances = dist(Z, X)
+    if k < m:
+        idx = np.argpartition(distances, k, axis=1)[:, :k]
+    else:
+        idx = np.indices((m, m))[1]  # <-- column indices
+    return np.mean(y[idx], axis=1)
+
+
+# <<<--- Replace this by your own result.
