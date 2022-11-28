@@ -21,8 +21,6 @@ def ls_boosting_fit(X, y, T):
     @param T: Ensemble size / number of base learner
     @return: A (ensemble) model H: X -> yhat
     """
-    from functools import reduce
-
     h_functions = []
     H = lambda X: sum([h(X) for h in h_functions])
     for _ in range(T):
