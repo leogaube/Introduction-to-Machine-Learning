@@ -13,7 +13,6 @@ def stump_fit(X, y):
     return predict
 
 
-
 def ls_boosting_fit(X, y, T):
     """
     Learn a least squares boosting ensemble
@@ -22,4 +21,14 @@ def ls_boosting_fit(X, y, T):
     @param T: Ensemble size / number of base learner
     @return: A (ensemble) model H: X -> yhat
     """
-    return None  # <<<--- Replace this by your own result.
+    from functools import reduce
+
+    h_functions = []
+    H = lambda X: sum([h(X) for h in h_functions])
+    for _ in range(T):
+        h = stump_fit(X, y - H(X))
+        h_functions.append(h)
+    return H
+
+
+# <<<--- Replace this by your own result.

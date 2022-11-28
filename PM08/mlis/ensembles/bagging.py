@@ -12,7 +12,9 @@ def bootstrap(X, y, rng):
     @return: A bootstrap data set
     """
     # rng.choice might be good function to use here.
-    return X, y  # <<<--- Replace this by your own result.
+    m, n = X.shape
+    idx = rng.choice(m, m)
+    return X[idx], y[idx]
 
 
 def fit_ensemble(X, y, base_learner, T, rng):
@@ -25,7 +27,8 @@ def fit_ensemble(X, y, base_learner, T, rng):
     @param rng: numpy RandomState instance.
     @return: A collection of fitted base_learner
     """
-    return []  # <<<--- Replace this by your own result.
+    ensemble = [base_learner(*bootstrap(X, y, rng)) for _ in range(T)]
+    return ensemble
 
 
 def ensemble_predict(X, ensemble):
@@ -36,4 +39,8 @@ def ensemble_predict(X, ensemble):
     @return: predictions for X using the ensemble
     """
     X = asinput(X)
-    return None  # <<<--- Replace this by your own result.
+    predictions = [base_learner(X) for base_learner in ensemble]
+    return np.mean(predictions, axis=0)
+
+
+# <<<--- Replace this by your own result.
