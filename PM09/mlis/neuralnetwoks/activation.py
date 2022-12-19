@@ -4,4 +4,7 @@ def ReLu(x):
     @param x: inputs
     @return:  max(0,x)
     """
-    return None  # <<<--- Replace this by your own result.
+    return (x > 0) * x
+
+
+# <<<--- Replace this by your own result.

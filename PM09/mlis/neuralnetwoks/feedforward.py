@@ -24,9 +24,11 @@ def predict(X, params, activation=ReLu):
     """
     z = asinput(X)
     for W, b in params[:-1]:
-        outputs = np.dot(z, W) + b
+        outputs = z @ W + b
         z = activation(outputs)
     # no activation on the last layer
     W, b = params[-1]
-    return np.dot(z, W) + b
-    return None  # <<<--- Replace this by your own result.
+    return z @ W + b
+
+
+# <<<--- Replace this by your own result.
